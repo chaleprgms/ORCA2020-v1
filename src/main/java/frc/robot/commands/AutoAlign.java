@@ -7,24 +7,25 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 
-public class Auto extends CommandBase {
+public class AutoAlign extends CommandBase {
   /**
-   * Creates a new Auto.
+   * Creates a new AutoAlign.
    */
-  private Timer timer = new Timer();
+
   private Drivetrain m_Drivetrain;
-  private boolean finished;
-
-  public Auto(Drivetrain dt) {
-
+  private Limelight m_Limelight;
+  public AutoAlign(Drivetrain dt, Limelight LL) {
     m_Drivetrain = dt;
+    m_Limelight = LL;
     addRequirements(m_Drivetrain);
-    finished = false;
+
+    
+
+
 
 
   }
@@ -32,46 +33,24 @@ public class Auto extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
-   
-    
-    
-    double m_time = timer.get();
-
-    SmartDashboard.putNumber("Auto: ", m_time);
-
-    if(m_time < 5){
-    
-      m_Drivetrain.AutoD(.25, -.25);
-    
-      finished = false;
-    
-    }else{
-    
-      m_Drivetrain._StAAapP();
-    
-      finished = true;
-    
-    }
-    
+    m_Drivetrain.visionAlignment(m_Limelight);
+  
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    timer.stop();
-    timer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }

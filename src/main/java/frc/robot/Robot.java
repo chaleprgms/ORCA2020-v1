@@ -23,7 +23,7 @@ import frc.robot.commands.Auto;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   Compressor c = new Compressor(0);
-  private RobotContainer m_robotContainer;
+  public RobotContainer m_robotContainer;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
 
-    m_chooser.addOption("Auto 1", new Auto(m_robotContainer.m_drivetrain));
+    m_chooser.addOption("Auto 1", new Auto(m_robotContainer.m_Drivetrain));
     
     c.start();
     m_robotContainer = new RobotContainer();

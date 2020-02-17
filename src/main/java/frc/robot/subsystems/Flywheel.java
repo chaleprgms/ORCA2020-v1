@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,8 +21,6 @@ public class Flywheel extends SubsystemBase {
     CANEncoder encoder;
     
     CANPIDController controller;
-
-    Constants constants = Constants.getConstants();
 
     double setpoint = 0;
 
@@ -44,7 +44,7 @@ public Flywheel(){
     }
     
     public void set(double setpoint) {
-        controller.setReference(0, ControlType.kVelocity);
+        controller.setReference(0, ControlType.kDutyCycle);
     }
 
     public void stop() {
@@ -56,10 +56,10 @@ public Flywheel(){
 
     public void updateConstants() {
         controller.setOutputRange(-1, 0);
-        controller.setP(constants.shooterP);
-        controller.setI(constants.shooterI);
-        controller.setD(constants.shooterD);
-        controller.setFF(constants.shooterF);
+        controller.setP(Constants.shooterP);
+        controller.setI(Constants.shooterI);
+        controller.setD(Constants.shooterD);
+        controller.setFF(Constants.shooterF);
     }
 
     /**
@@ -70,14 +70,14 @@ public Flywheel(){
     public void SlowStop() {
         boolean finish = false;
         while (finish == false) {
-            if (expont / expont > 0) {
-                expont = 0.0;
+            if (exponent / exponent > 0) {
+                exponent = 0.0;
                 finish = true;
-            } else if (expont > 0) {
+            } else if (exponent > 0) {
                 // adds exponital growth to speed
-                expont = expont / expont;
-                left.set(expont);
-                right.set(-expont);
+                exponent = exponent / exponent;
+                left.set(exponent);
+                right.set(-exponent);
             } else {
                 // for testing putting stop
                 stop();
@@ -85,9 +85,8 @@ public Flywheel(){
             }
 
          }
-        return expont;
     }
-*/
+
     // exponential growth of speed
     public void SpeedUp() {
         exponent = .00001;
@@ -98,15 +97,15 @@ public Flywheel(){
             if (exponent + exponent > Constants.kFlywheelSpeed) {
                 exponent = Constants.kFlywheelSpeed;
                 finish = true;
-            } else if (expont > 0) {
+            } else if (exponent > 0) {
                 // adds exponital growth to speed
-                expont = expont * expont;
-                left.set(expont);
-                right.set(-expont);
+                exponent = exponent * exponent;
+                left.set(exponent);
+                right.set(-exponent);
             } else {
                 stop();
                 finish = true;
             }
-
-        }
+          }
+    }
 }

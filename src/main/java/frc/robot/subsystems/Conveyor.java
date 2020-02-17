@@ -17,9 +17,17 @@ import frc.robot.Constants;
 
 public class Conveyor extends SubsystemBase {
   // Motor Controllers:
-  private TalonSRX m_conveyor1 = new TalonSRX(Constants.kConveyor1);
-  private TalonSRX m_conveyor2 = new TalonSRX(Constants.kConveyor2);
-  DoubleSolenoid ConveySoli = new DoubleSolenoid(0, 1);
+  private TalonSRX m_conveyor1;
+  private TalonSRX m_conveyor2;
+  private DoubleSolenoid ConveySoli;
+
+
+  public Conveyor(){
+    m_conveyor1 = new TalonSRX(Constants.kConveyor1);
+    m_conveyor2 = new TalonSRX(Constants.kConveyor2);
+    ConveySoli = new DoubleSolenoid(0, 1);
+  }
+
 
   /**
    * Runs conveyor up
@@ -45,14 +53,8 @@ public class Conveyor extends SubsystemBase {
     m_conveyor2.set(ControlMode.PercentOutput, 0);
   }
 
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    reverse();
-    stopConveyor();
-  }
-
   public void toggle() {
-  //Switches between fired a reteacted per called
+  //Switches between fired a retracted per called
     if (Constants.ToggleSoli = true) {
       forward();
       Constants.ToggleSoli = false;
@@ -63,9 +65,10 @@ public class Conveyor extends SubsystemBase {
       off();
     }
   }
+
 //fires 
 public void forward() {
-    ConveySoli.set(DoubleSolenoid.Value.kForward);
+  ConveySoli.set(DoubleSolenoid.Value.kForward);
 }
 //retracts
 public void reverse() {

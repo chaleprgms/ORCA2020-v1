@@ -16,7 +16,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //DriveTrain Motors
+    
+    
+//DriveTrain Motors
     public static int fl_motor_id = 1;
     public static int fr_motor_id = 4;
     public static int rr_motor_id = 3;
@@ -42,6 +44,12 @@ public final class Constants {
     public static final double kRightDriveScaling = 0.8;
     public static final double kWinchSpeed = 0.5;
 
-    public static double debugShooterSet = -4000;
+    public static final double shooterP = 0.0011;
+    public static final double shooterI = 0;
+    public static final double shooterD = 4;
+    public static final double shooterF = 0.00017;
+
+    public static final double debugShooterSet = -4000;
+
     public static boolean ToggleSoli = false;
 }

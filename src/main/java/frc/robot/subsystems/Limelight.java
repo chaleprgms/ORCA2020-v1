@@ -8,11 +8,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * Add your docs here.
  */
-public class Limelight {
+public class Limelight extends SubsystemBase{
 
   private final double STEER_K = 0.03;
   private final double DRIVE_K = 0.26;
@@ -27,9 +29,6 @@ public class Limelight {
 
   public Limelight(){
     
-    // Coding this at 1 A.M. EST
-    // Please dont judge my method names
-
     m_LimelightHasValidTarget = false;
 
 
@@ -41,23 +40,15 @@ public class Limelight {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-    ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode");
+    ledMode = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode");  
 
-  
-  }
-
-  public void initDefaultCommand(){
-    // IM FORCED TO PUT THIS HERE FOR NOW
-
-    //TODO: Find a way around this.
-    
+    SmartDashboard.putNumber("ledMode: ", ledMode.getDouble(0));
   }
 
 
   public boolean findTarget(){
     
     m_LimelightHasValidTarget = false;
-
     ledMode.setDouble(3);
     
     
@@ -73,7 +64,6 @@ public class Limelight {
 
     }
 
-    
   }
 
 

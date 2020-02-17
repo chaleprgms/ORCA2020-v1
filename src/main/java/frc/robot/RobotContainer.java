@@ -9,14 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoAlign;
 import frc.robot.subsystems.ColorSoli;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 
 
 
@@ -34,25 +35,34 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final Dummy_Test_System m_testbed = new Dummy_Test_System();
 
-  Drivetrain m_drivetrain = new Drivetrain();
+  Drivetrain m_Drivetrain = new Drivetrain();
   
-  XboxController controller = new XboxController(1);
-  ColorSoli m_ColorSoli = new ColorSoli(); 
-  Intake m_Intake = new Intake();
-  Conveyor m_Conveyor = new Conveyor();
-  Flywheel m_FlyWheel = new Flywheel();
+  public XboxController controller;
+  public ColorSoli m_ColorSoli;
+  public Intake m_Intake;
+  public Conveyor m_Conveyor;
+  public Flywheel m_FlyWheel;
+  public Limelight m_Limelight;
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_drivetrain.setDefaultCommand(
-        new RunCommand(() -> m_drivetrain.Drive(controller), m_drivetrain));
+
+    controller = new XboxController(1);
+    m_ColorSoli = new ColorSoli(); 
+    m_Intake = new Intake();
+    m_Conveyor = new Conveyor();
+    m_FlyWheel = new Flywheel();
+    m_Limelight = new Limelight();
+
+    m_Drivetrain.setDefaultCommand(
+        new RunCommand(() -> m_Drivetrain.Drive(controller)));
 
     m_FlyWheel.setDefaultCommand(
-        new RunCommand(() -> m_FlyWheel.test(controller), m_FlyWheel));
+        new RunCommand(() -> m_FlyWheel.test(controller)));
 
-    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -67,25 +77,25 @@ public class RobotContainer {
 
     // Left Bumper Button - Rise Climb
     new JoystickButton(controller, XboxController.Button.kBumperLeft.value)
-    .whenHeld(new RunCommand(() -> m_drivetrain.WinchDown(controller), m_drivetrain ));
+    .whenHeld(new RunCommand(() -> m_Drivetrain.WinchDown(controller)));
 
     new JoystickButton(controller, XboxController.Button.kBumperLeft.value)
-    .whenReleased(new RunCommand(() -> m_drivetrain.reverse(), m_drivetrain ));
+    .whenReleased(new RunCommand(() -> m_Drivetrain.reverse()));
 
     new JoystickButton(controller, XboxController.Button.kBumperLeft.value)
-    .whenReleased(new RunCommand(() -> m_drivetrain.Drive(controller), m_drivetrain ));
+    .whenReleased(new RunCommand(() -> m_Drivetrain.Drive(controller)));
 
 
 
    // Right Bumper Button - Lower Climb 
     new JoystickButton(controller, XboxController.Button.kBumperRight.value)
-    .whenHeld(new RunCommand(() -> m_drivetrain.WinchUp(controller), m_drivetrain ));
+    .whenHeld(new RunCommand(() -> m_Drivetrain.WinchUp(controller)));
 
     new JoystickButton(controller, XboxController.Button.kBumperRight.value)
-    .whenReleased(new RunCommand(() -> m_drivetrain.reverse(), m_drivetrain ));
+    .whenReleased(new RunCommand(() -> m_Drivetrain.reverse()));
     
     new JoystickButton(controller, XboxController.Button.kBumperRight.value)
-    .whenReleased(new RunCommand(() -> m_drivetrain.Drive(controller), m_drivetrain ));
+    .whenReleased(new RunCommand(() -> m_Drivetrain.Drive(controller)));
 
 
 
@@ -94,26 +104,22 @@ public class RobotContainer {
         .whenHeld(new RunCommand(() -> m_Intake.intakeOut()));
 
     new JoystickButton(controller, XboxController.Button.kB.value)
-    .whenReleased(new RunCommand(() -> m_Intake.intakeStop(), m_Intake));
+    .whenReleased(new RunCommand(() -> m_Intake.intakeStop()));
  
 
   
    //A Button - Intake In
     new JoystickButton(controller, XboxController.Button.kA.value)
-    .whenHeld(new RunCommand(() -> m_Intake.intakeIn(),  m_Intake ));
+    .whenHeld(new RunCommand(() -> m_Intake.intakeIn()));
 
     new JoystickButton(controller, XboxController.Button.kA.value)
-    .whenReleased(new RunCommand(() -> m_Intake.intakeStop(),  m_Intake));
+    .whenReleased(new RunCommand(() -> m_Intake.intakeStop()));
 
 
 
    //Left Stick Button - Conveyor Up
    new JoystickButton(controller, XboxController.Button.kStickLeft.value)
-<<<<<<< Updated upstream
-   .whenPressed(new RunCommand(() -> Conveyor.stopConveyor(), m_Conveyor));
-   
-=======
-   .whenPressed(new RunCommand(() -> m_FlyWheel.set(Constants.debugShooterSet), m_FlyWheel));
+   .whenPressed(new RunCommand(() -> m_FlyWheel.set(Constants.debugShooterSet)));
    
    
    
@@ -121,50 +127,37 @@ public class RobotContainer {
 
    //Right Stick Button 
    new JoystickButton(controller, XboxController.Button.kStickRight.value)
-   .whenPressed(new RunCommand(() -> m_FlyWheel.stop(), m_FlyWheel));
+   .whenPressed(new RunCommand(() -> m_FlyWheel.stop()));
  
->>>>>>> Stashed changes
 
    //Right Stick Button - Conveyor Down
   
 
     //X Button - Conveyor Soli fire
     new JoystickButton(controller, XboxController.Button.kX.value)
-    .whenPressed(new RunCommand(() -> m_Conveyor.forward(), m_Conveyor));
+    .whenPressed(new RunCommand(() -> m_Conveyor.forward()));
 
 
     //Y Button - Conveyor Soli retact
     new JoystickButton(controller, XboxController.Button.kY.value)
-    .whenPressed(new RunCommand(() -> m_Conveyor.reverse(), m_Conveyor));
+    .whenPressed(new RunCommand(() -> m_Conveyor.reverse()));
 
 
-<<<<<<< Updated upstream
-   //Start Button 
-=======
 
 
    //Start Button - Shooter Speed Up
    new JoystickButton(controller, XboxController.Button.kStart.value)
-   .whenPressed(new RunCommand(() -> m_FlyWheel.SpeedUp(), m_FlyWheel));
+   .whenPressed(new RunCommand(() -> m_FlyWheel.SpeedUp()));
 
->>>>>>> Stashed changes
+   // Back Button
+   new JoystickButton(controller, XboxController.Button.kBack.value)
+   .whenHeld(new AutoAlign(m_Drivetrain, m_Limelight));
+   
 
-
-
-   //Select/Back Button 
-<<<<<<< Updated upstream
-  
- 
-  }
-=======
+   // Back Button 
    new JoystickButton(controller, XboxController.Button.kBack.value)
    .whenPressed(new RunCommand(() -> m_FlyWheel.SlowStop(), m_FlyWheel));
->>>>>>> Stashed changes
 
-  
-
-
- 
-  }
+ }
 
 }
