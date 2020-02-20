@@ -36,11 +36,6 @@ public class Intake extends SubsystemBase {
     m_intake2.set(ControlMode.PercentOutput, Constants.kIntakeSpeed);
   }
 
-  // toggles solenoid for the intake arms
-  public void toggle_solenoid() {
-
-  }
-
   /**
    * Stops the intake motor
    */
@@ -50,14 +45,14 @@ public class Intake extends SubsystemBase {
   }
 
   public void initDefaultCommand() {
-    reverse();
+    retractIntake();
   }
 
-  public void forward() {
+  public void deployIntake() {
     IntakeSoli.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void reverse(){
+  public void retractIntake(){
     IntakeSoli.set(Value.kReverse);
   }
 

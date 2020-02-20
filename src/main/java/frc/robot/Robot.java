@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Auto;
+import frc.robot.auto.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
 
-    m_chooser.addOption("Auto 1", new Auto(m_robotContainer.m_Drivetrain));
+    m_chooser.addOption("Auto 1", new Auto(m_robotContainer.m_Drivetrain, m_robotContainer.m_Intake, m_robotContainer.m_FlyWheel));
     
     c.start();
     m_robotContainer = new RobotContainer();

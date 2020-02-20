@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -18,15 +18,11 @@ public class AutoAlign extends CommandBase {
 
   private Drivetrain m_Drivetrain;
   private Limelight m_Limelight;
+  
   public AutoAlign(Drivetrain dt, Limelight LL) {
     m_Drivetrain = dt;
     m_Limelight = LL;
     addRequirements(m_Drivetrain);
-
-    
-
-
-
 
   }
 

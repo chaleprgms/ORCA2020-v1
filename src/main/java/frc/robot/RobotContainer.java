@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoAlign;
+import frc.robot.auto.AutoAlign;
 import frc.robot.subsystems.ColorSoli;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
@@ -35,8 +35,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final Dummy_Test_System m_testbed = new Dummy_Test_System();
 
-  Drivetrain m_Drivetrain = new Drivetrain();
-  
+  public Drivetrain m_Drivetrain = new Drivetrain(); 
   public XboxController controller;
   public ColorSoli m_ColorSoli;
   public Intake m_Intake;
